@@ -30,9 +30,9 @@ public class PinyinUtil {
     static {
         // 当PinyinUtil类加载时执行静态块，除了产生对象外，还可以进行一些配置相关的工作
         FORMAT = new HanyuPinyinOutputFormat();
-//        // 设置转换后的英文字母为全小写 鹏 -> peng
+        // 设置转换后的英文字母为全小写 鹏 -> peng
         FORMAT.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-//         设置转换后的英文字母是否带音调
+       // 设置转换后的英文字母是否带音调
         FORMAT.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         // 特殊拼音用v替代 绿 -> lv
         FORMAT.setVCharType(HanyuPinyinVCharType.WITH_V);
@@ -52,9 +52,11 @@ public class PinyinUtil {
         // 第一个字符串为文件名全拼
         // 第二个字符串为首字母
         String[] ret = new String[2];
+
         // 核心操作就是遍历文件名中的每个字符，碰到非中文直接保留，中文处理
         StringBuilder allNameAppender = new StringBuilder();
         StringBuilder firstCaseAppender = new StringBuilder();
+
         // fileName = 鹏哥c真帅
         // c = 鹏
         for (char c : fileName.toCharArray()) {
@@ -89,7 +91,5 @@ public class PinyinUtil {
         String str2 = "中华c人民共1和2国3";
         System.out.println(Arrays.toString(getPinyinByFileName(str2)));
     }
-
-
 }
 
