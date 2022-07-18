@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author: xinyan
@@ -46,5 +47,22 @@ public class DBUtil {
 
     public static void main(String[] args) throws SQLException {
         System.out.println(getConnection());
+    }
+
+    public static void close(Connection connection, Statement statement) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
