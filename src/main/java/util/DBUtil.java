@@ -33,9 +33,8 @@ public class DBUtil {
         return DATASOURCE;
     }
 
-
     private static String getUrl() {
-        String path = "/Users/ryan/Desktop/比特/MyEverything/target";
+        String path = "/Users/ryan/Desktop/Bit/MyEverything/target";
         String url = "jdbc:sqlite://" + path + File.separator + "search_everything.db";
         System.out.println("获取数据库的连接为 : " + url);
         return url;

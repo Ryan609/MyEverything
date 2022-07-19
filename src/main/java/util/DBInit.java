@@ -64,6 +64,6 @@ public class DBInit {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-       init();
+
     }
 }
