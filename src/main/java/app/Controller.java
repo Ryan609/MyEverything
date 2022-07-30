@@ -42,6 +42,8 @@ public class Controller implements Initializable {
 
     private List<FileMeta> fileMetas;
 
+    private Thread scanThread;
+
     public void initialize(URL location, ResourceBundle resources) {
         DBInit.init();
         // 添加搜索框监听器，内容改变时执行监听事件
@@ -64,19 +66,19 @@ public class Controller implements Initializable {
         String path = file.getPath();
         this.srcDirectory.setText(path);
         //获取扫描文件的路径后进行文件扫描.
-        System.out.println("开始进行文件扫描任务,根路径为 : " + path);
 
-        long start = System.nanoTime();
         FileScanner fileScanner = new FileScanner(new FileSave2DB());
-        fileScanner.scan(file);
-        long end = System.nanoTime();
-
-        System.out.println("文件扫描任务结束,共耗时 : " + (end - start) * 1.0 / 1000000 + "ms");
-        System.out.println("共扫描到 ： " + fileScanner.getDirNum() + "个文件夹");
-        System.out.println("共扫描到 ： " + fileScanner.getFileNum() + "个文件");
-
-        // TODO
-        freshTable();
+        if (scanThread != null) {
+            // 创建过任务，且该任务还没执行结束,中断当前正在扫描的任务
+            scanThread.interrupt();
+        }
+        // 开启新线程扫描新选择的目录
+        scanThread = new Thread(() -> {
+            // 刷新界面，展示刚才扫描到的文件信息
+            fileScanner.scan(file);
+            freshTable();
+        });
+        scanThread.start();
     }
 
     // 刷新表格数据

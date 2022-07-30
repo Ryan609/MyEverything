@@ -42,7 +42,7 @@ public class FileSearch {
                 ps.setString(4,"%" + content + "%");
                 ps.setString(5,"%" + content + "%");
             }
-            System.out.println("正在从数据库中检索信息,sql为:" + ps);
+//            System.out.println("正在从数据库中检索信息,sql为:" + ps);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -55,7 +55,7 @@ public class FileSearch {
                     meta.setSize(rs.getLong("size"));
                 }
                 meta.setLastModified(new Date(rs.getTimestamp("last_modified").getTime()));
-                System.out.println("检索到文件信息 : name = " + meta.getName() + ",path = " + meta.getPath());
+//                System.out.println("检索到文件信息 : name = " + meta.getName() + ",path = " + meta.getPath());
                 result.add(meta);
             }
         } catch (SQLException e) {

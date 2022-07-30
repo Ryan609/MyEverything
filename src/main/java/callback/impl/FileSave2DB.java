@@ -42,15 +42,14 @@ public class FileSave2DB implements FileScannerCallBack {
 
             // 3.对比视图1和视图2
             // 本地有，数据库没有的，做插入
-            for (FileMeta meta : locals) {
-                if (!dbFiles.contains(meta)) {
-                    save(meta);
-                }
-            }
-            // 数据库有的，本地没有，做删除
             for (FileMeta meta : dbFiles) {
                 if (!locals.contains(meta)) {
                     delete(meta);
+                }
+            }
+            for (FileMeta meta : locals) {
+                if (!dbFiles.contains(meta)) {
+                    save(meta);
                 }
             }
         }
@@ -77,13 +76,13 @@ public class FileSave2DB implements FileScannerCallBack {
                 ps.setString(4,meta.getPath() + File.separator + meta.getName()
                         + File.separator + "%");
             }
-            System.out.println("执行删除操作，SQL为 : " + ps);
+//            System.out.println("执行删除操作，SQL为 : " + ps);
             int rows = ps.executeUpdate();
-            if (meta.getIsDirectory()) {
-                System.out.println("删除文件夹 " + meta.getName() + "成功，共删除" + rows + "个文件");
-            }else {
-                System.out.println("删除文件 " + meta.getName() + "成功");
-            }
+//            if (meta.getIsDirectory()) {
+//                System.out.println("删除文件夹 " + meta.getName() + "成功，共删除" + rows + "个文件");
+//            }else {
+//                System.out.println("删除文件 " + meta.getName() + "成功");
+//            }
         }catch (SQLException e) {
             System.err.println("文件删除出错，请检查SQL语句");
             e.printStackTrace();
@@ -116,9 +115,9 @@ public class FileSave2DB implements FileScannerCallBack {
                 ps.setString(6,pinyins[0]);
                 ps.setString(7,pinyins[1]);
             }
-            System.out.println("执行文件保存操作，SQL为 : " + ps);
+//            System.out.println("执行文件保存操作，SQL为 : " + ps);
             int rows = ps.executeUpdate();
-            System.out.println("成功保存 " + rows + "行文件信息");
+//            System.out.println("成功保存 " + rows + "行文件信息");
         } catch (SQLException e) {
             System.err.println("保存文件信息出错，请检查SQL语句");
             e.printStackTrace();
@@ -141,7 +140,7 @@ public class FileSave2DB implements FileScannerCallBack {
             ps = connection.prepareStatement(sql);
             ps.setString(1,dir.getPath());
             rs = ps.executeQuery();
-            System.out.println("查询指定路径的SQL为 : " + ps);
+//            System.out.println("查询指定路径的SQL为 : " + ps);
 
             while (rs.next()) {
                 FileMeta meta = new FileMeta();
