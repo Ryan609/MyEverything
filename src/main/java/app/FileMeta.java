@@ -39,7 +39,11 @@ public class FileMeta {
         this.sizeText = Util.parseSize(size);
     }
 
-    public void setDirectory(Boolean directory) {
+//    public void setDirectory(Boolean directory) {
+//        isDirectory = directory;
+//        this.isDirectoryText = Util.parseFileType(directory);
+//    }
+    public void setIsDirectory(Boolean directory) {
         isDirectory = directory;
         this.isDirectoryText = Util.parseFileType(directory);
     }

@@ -26,6 +26,8 @@ public class PinyinUtil {
     // 这个配置就表示将汉字字符转为拼音字符串时的一些设置
     private static final HanyuPinyinOutputFormat FORMAT;
 
+    private static final String CHINESE_PATTERN = "[\\u4E00-\\u9FA5]";
+
     // 代码块就是在进行一些项目配置的初始化操作
     static {
         // 当PinyinUtil类加载时执行静态块，除了产生对象外，还可以进行一些配置相关的工作
@@ -90,6 +92,10 @@ public class PinyinUtil {
         System.out.println("-------------------------------------------");
         String str2 = "中华c人民共1和2国3";
         System.out.println(Arrays.toString(getPinyinByFileName(str2)));
+    }
+
+    public static boolean containsChinese(String str) {
+        return str.matches(".*" + CHINESE_PATTERN + ".*");
     }
 }
 

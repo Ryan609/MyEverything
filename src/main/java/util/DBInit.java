@@ -32,9 +32,9 @@ public class DBInit {
                 if ("".equals(str) || "\n".equals(str)) {
                     continue;
                 }
-                if (str.contains("--")) {
-                    str = str.replaceAll("--", "");
-                }
+//                if (str.contains("--")) {
+//                    str = str.replaceAll("--", "");
+//                }
                 ret.add(str);
             }
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class DBInit {
             System.out.println("数据库初始化失败");
             e.printStackTrace();
         } finally {
-            DBUtil.close(connection,statement);
+            DBUtil.close(statement);
         }
     }
 

@@ -5,9 +5,7 @@ import org.sqlite.SQLiteDataSource;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * @author: xinyan
@@ -15,6 +13,8 @@ import java.sql.Statement;
  **/
 public class DBUtil {
     private volatile static DataSource DATASOURCE;
+
+    private volatile static Connection CONNECTION;
 
     private static DataSource getDataSource() {
         if (DATASOURCE == null) {
@@ -41,24 +41,36 @@ public class DBUtil {
     }
 
     public static Connection getConnection() throws SQLException {
-        return getDataSource().getConnection();
+        if (CONNECTION == null) {
+            synchronized (DBUtil.class) {
+                if (CONNECTION == null) {
+                    CONNECTION = getDataSource().getConnection();
+                }
+            }
+        }
+        return CONNECTION;
     }
 
     public static void main(String[] args) throws SQLException {
         System.out.println(getConnection());
     }
 
-    public static void close(Connection connection, Statement statement) {
-        if (connection != null) {
+
+    public static void close(Statement statement) {
+        if (statement != null) {
             try {
-                connection.close();
+                statement.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        if (statement != null) {
+    }
+
+    public static void close(PreparedStatement ps, ResultSet rs) {
+        close(ps);
+        if (rs != null) {
             try {
-                statement.close();
+                rs.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
